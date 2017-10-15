@@ -116,4 +116,50 @@ float hartverdrahtet(float3 f)
 	float z = length(f.xy) - fu;
 	return fd*max(z, abs(length(f.xy)*f.z) / sqrt(dot(f, f))) / abs(v);
 }
+
+// カイワレ距離関数
+float DistanceFuncKaiware(float3 pos, float3 kpos, float3 scale, float3 axis, float angle)
+{
+	// 座標
+	float3 p = pos - kpos;
+
+	// 回転
+	p = rotate(p, angle, axis);
+
+	// スケール
+	p = p / scale;
+
+	// 頭部
+	float d1 = roundBox(p, float3(1, 0.8, 1), 0.1);
+
+	// くちばし
+	float d2_0 = roundBox(p - float3(0, -0.2, 0.7), float3(0.8, 0.25, 0.4), 0.1);
+	//float d2_0 = box(p - float3(0, -0.2, 0.7), float3(0.8, 0.25, 0.4));
+	float d2_1 = box(p - float3(0, -0.0, 0.7), float3(1.1, 0.35, 1.1));	// 上半分
+	float d2_2 = box(p - float3(0, -0.4, 0.7), float3(1.1, 0.35, 1.1));	// 下半分
+	float d2_3 = roundBox(p - float3(0, -0.2, 0.7), float3(0.75, 0.1, 0.35), 0.1);	// 溝
+
+	float d2_top = max(d2_0, d2_1);
+	float d2_bottom = max(d2_0, d2_2);
+	float d2 = min(min(d2_top, d2_bottom), d2_3);
+
+	// 葉っぱの茎
+	float d3_0 = Capsule(p, float3(0, 0.5, 0), float3(0, 1, 0), 0.05);
+	// 葉っぱ
+	float d3_1 = ellipsoid(p - float3(0.2, 1, 0), float3(0.2, 0.025, 0.1));
+	float d3_2 = ellipsoid(p - float3(-0.2, 1, 0), float3(0.2, 0.025, 0.1));
+	float d3 = min(d3_0, min(d3_1, d3_2));
+
+	// 目
+	float d4_0 = Capsule(p, float3(0.2, 0.25, 0.6), float3(0.4, 0.2, 0.6), 0.025);
+	float d4_1 = Capsule(p, float3(-0.2, 0.25, 0.6), float3(-0.4, 0.2, 0.6), 0.025);
+	float d4 = min(d4_0, d4_1);
+
+	// 合成
+	float sum = max(min(min(d1, d2), d3), -d4);
+
+	sum *= scale;
+
+	return sum;
+}
 #endif	// distancefunction_h 

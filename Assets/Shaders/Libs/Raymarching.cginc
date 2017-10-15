@@ -77,7 +77,7 @@ gbuffer raymarch_frag(v2f i)
 	transform tr;
 	tr = CUSTOM_TRANSFORM(0, 0, 1);
 
-	rayOut = raymarch(i.screenPos.xy, tr, 1000);
+	rayOut = raymarch(i.screenPos.xy, tr, 100);
 	clip(-rayOut.distance + RAY_HIT_DISTANCE);
 
 	float depth = GetDepth(rayOut.pos);

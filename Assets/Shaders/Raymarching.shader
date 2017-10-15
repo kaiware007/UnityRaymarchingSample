@@ -27,38 +27,19 @@
 	float CustomDistanceFunction(float3 pos) 
 	{
 		const float repeatSize = 5;
-		const float gridSize = 5;
-		const float rotSpeed = _Time.y * 5.5;
-		const float smoothPower = 20;
+		const float center = repeatSize * 0.5;
 
-		float3 pq = floor(pos / gridSize);
-		float3 axis = normalize(hash(pq));
-		pq.x += _Time.y * 1;
-		float h = noise(pq);
+		float h = _Time.y * 0.5;
 
-		pos = repeat(pos, float3(repeatSize, repeatSize, repeatSize));
-		//pos = twistY(pos, sin(_Time.y));
-		float3 posY = rotateY(pos, rotSpeed);
-		float3 posX = rotateY(rotateX(pos, PI * 0.5), rotSpeed);
-		float3 posZ = rotateY(rotateX(rotateY(pos, PI * 0.5), PI * 0.5), rotSpeed);
-		//pos = rotate(pos, cos(_Time.y * 1.5), axis);
+		pos = repeat(pos + center, float3(repeatSize, repeatSize, repeatSize));
 
-		//float2 hexParams = float2(0.5, 0.5 + h * 2.5);
-		float2 hexParams = float2(0.5, 0.5 + h*2.0);
-
-		float hexY = hexagonalPrismY(posY, hexParams);
-		float hexX = hexagonalPrismY(posX, hexParams);
-		float hexZ = hexagonalPrismY(posZ, hexParams);
-
-		return smoothMin(smoothMin(hexY, hexZ, smoothPower), hexX, smoothPower);
-
+		return DistanceFuncKaiware(pos, float3(0, 0, 0), float3(1, 1, 1), float3(0, 1, 0), h);
 	}
 
 	gbuffer CustomGBufferOutPut(float3 normal, float depth, raymarchOut rayOut)
 	{
-		half4 col = half4(normal * 0.5 + 0.5, 1);
 		float fog = min(1.0, (1.0 / 100)) * float(rayOut.count) * 1.5;
-		return InitGBuffer(col, _Specular, normal, _Emission * fog, depth);
+		return InitGBuffer(_Diffuse, _Specular, normal, _Emission * fog, depth);
 	}
 
 #define CUSTOM_DISTANCE_FUNCTION(p) CustomDistanceFunction(p)
