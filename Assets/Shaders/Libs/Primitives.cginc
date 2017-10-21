@@ -33,9 +33,10 @@ inline float floorPlane(float3 pos)
 }
 
 // 円筒
-inline float cylinder(float3 pos, float2 r){
-    float2 d = abs(float2(length(pos.xy), pos.z)) - r;
-    return min(max(d.x, d.y), 0.0) + length(max(d, 0.0)) - 0.1;
+// r.x:半径 r.y:高さ r.z:角の丸み
+inline float cylinder(float3 pos, float3 r){
+    float2 d = abs(float2(length(pos.xy), pos.z)) - r.xy;
+    return min(max(d.x, d.y), 0.0) + length(max(d, 0.0)) - r.z;
 }
 
 // カプセル

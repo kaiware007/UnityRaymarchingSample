@@ -1,4 +1,4 @@
-﻿Shader "Raymarching/Raymarching"
+﻿Shader "Raymarching/Raymarching Cylinder Rotate"
 {
 	Properties
 	{
@@ -9,8 +9,6 @@
 		_Position("Position (XYZ) Axis (W) no use", Vector) = (0, 0, 0, 0)
 		_Rotation("Rotate (XYZ) Axis (W) no use", Vector) = (0, 0, 0, 0)
 		_Scale("Scale (XYZ) Axis (W) no use", Vector) = (1, 1, 1, 0)
-
-		//_ObjectSpaceRaymarch("Object Space Raymarch", Float) = 0
 	}
 
 	CGINCLUDE
@@ -26,21 +24,14 @@
 
 	float CustomDistanceFunction(float3 pos) 
 	{
-		const float repeatSize = 5;
-		const float center = repeatSize * 0.5;
+		float c1 = cylinder(pos - float3(1, 0, 0), float3(0.5, 1, 0.1));
 
-		float h = _Time.y * 0.5;
-		float px = sin(_Time.y * 2);
-		float py = cos(_Time.y * 1.43);
-		float pz = sin(_Time.y * 1.835);
+		// X軸方向に90度回転
+		pos = rotateX(pos, PI * 0.5);
 
-		pos = repeat(pos + center, float3(repeatSize, repeatSize, repeatSize));
+		float c2 = cylinder(pos + float3(1, 0, 0), float3(0.5, 1, 0.1));
 
-		pos = twistY(pos, py);
-		pos = twistX(pos, px);
-		pos = twistZ(pos, pz);
-
-		return DistanceFuncKaiware(pos, float3(0, 0, 0), float3(1, 1, 1), float3(0, 1, 0), h);
+		return min(c1, c2);
 	}
 
 	gbuffer CustomGBufferOutPut(float3 normal, float depth, raymarchOut rayOut)

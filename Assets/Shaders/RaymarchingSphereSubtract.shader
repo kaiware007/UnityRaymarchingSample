@@ -1,4 +1,4 @@
-﻿Shader "Raymarching/Raymarching"
+﻿Shader "Raymarching/Raymarching Sphere subtract"
 {
 	Properties
 	{
@@ -9,8 +9,6 @@
 		_Position("Position (XYZ) Axis (W) no use", Vector) = (0, 0, 0, 0)
 		_Rotation("Rotate (XYZ) Axis (W) no use", Vector) = (0, 0, 0, 0)
 		_Scale("Scale (XYZ) Axis (W) no use", Vector) = (1, 1, 1, 0)
-
-		//_ObjectSpaceRaymarch("Object Space Raymarch", Float) = 0
 	}
 
 	CGINCLUDE
@@ -26,21 +24,9 @@
 
 	float CustomDistanceFunction(float3 pos) 
 	{
-		const float repeatSize = 5;
-		const float center = repeatSize * 0.5;
-
-		float h = _Time.y * 0.5;
-		float px = sin(_Time.y * 2);
-		float py = cos(_Time.y * 1.43);
-		float pz = sin(_Time.y * 1.835);
-
-		pos = repeat(pos + center, float3(repeatSize, repeatSize, repeatSize));
-
-		pos = twistY(pos, py);
-		pos = twistX(pos, px);
-		pos = twistZ(pos, pz);
-
-		return DistanceFuncKaiware(pos, float3(0, 0, 0), float3(1, 1, 1), float3(0, 1, 0), h);
+		float sp = sphere(pos, 0.7);
+		float bo = box(pos, float3(1, 1, 1));
+		return max(-sp, bo);
 	}
 
 	gbuffer CustomGBufferOutPut(float3 normal, float depth, raymarchOut rayOut)

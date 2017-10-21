@@ -62,11 +62,11 @@ struct v2f
 //MRTにより出力するG-Buffer
 struct gbuffer
 {
-	half4 diffuse : SV_Target0; // rgb: diffuse,  a: occlusion
-	half4 specular : SV_Target1; // rgb: specular, a: smoothness
-	half4 normal : SV_Target2; // rgb: normal,   a: unused
-	half4 emission : SV_Target3; // rgb: emission, a: unused
-	float depth : SV_Depth;
+	half4 diffuse  : SV_Target0;	// rgb: diffuse,  a: occlusion
+	half4 specular : SV_Target1;	// rgb: specular, a: smoothness
+	half4 normal   : SV_Target2;	// rgb: normal,   a: unused
+	half4 emission : SV_Target3;	// rgb: emission, a: unused
+	float depth    : SV_Depth;		// Depth
 };
 
 struct raymarchOut
@@ -74,7 +74,7 @@ struct raymarchOut
 	float3 pos;		// ワールド座標
 	int count;		// 試行回数
 	float length;	// レイが進んだ長さ
-	float distance;	// 最後に思考された距離関数の出力
+	float distance;	// 最後に試行された距離関数の出力
 };
 
 struct transform

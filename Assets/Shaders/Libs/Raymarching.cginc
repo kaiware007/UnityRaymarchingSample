@@ -65,6 +65,7 @@ v2f raymarch_vert(appdata v)
 {
 	v2f o;
 	o.vertex = UnityObjectToClipPos(v.vertex);
+	// ラスタライズしてフラグメントシェーダで各ピクセルの座標として使う
 	o.screenPos = o.vertex;
 	return o;
 }

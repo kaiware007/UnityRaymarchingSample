@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RayMarhing
-  m_Shader: {fileID: 4800000, guid: 11df2b7584988ae4db10e5f07c5be6fa, type: 3}
+  m_Name: RayMarhingSphere
+  m_Shader: {fileID: 4800000, guid: 73e83d382943cf6419f299d1ea3e4b4a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -67,6 +67,7 @@ Material:
     - _ObjectSpaceRaymarch: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _R: 0.25
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -74,7 +75,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Diffuse: {r: 0.6336713, g: 1, b: 0.38235295, a: 1}
+    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
     - _Emission: {r: 0.4477725, g: 0.47420946, b: 0.74264705, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}

@@ -1,4 +1,4 @@
-﻿Shader "Raymarching/Raymarching"
+﻿Shader "Raymarching/Raymarching pseudo_kleinian"
 {
 	Properties
 	{
@@ -10,7 +10,7 @@
 		_Rotation("Rotate (XYZ) Axis (W) no use", Vector) = (0, 0, 0, 0)
 		_Scale("Scale (XYZ) Axis (W) no use", Vector) = (1, 1, 1, 0)
 
-		//_ObjectSpaceRaymarch("Object Space Raymarch", Float) = 0
+		_TorusParam("Torus Param(Radius, Radius)", Vector) = (1, 1, 0, 0)
 	}
 
 	CGINCLUDE
@@ -23,24 +23,11 @@
 	float4 _Diffuse;
 	float4 _Specular;
 	float4 _Emission;
+	float2 _TorusParam;
 
 	float CustomDistanceFunction(float3 pos) 
 	{
-		const float repeatSize = 5;
-		const float center = repeatSize * 0.5;
-
-		float h = _Time.y * 0.5;
-		float px = sin(_Time.y * 2);
-		float py = cos(_Time.y * 1.43);
-		float pz = sin(_Time.y * 1.835);
-
-		pos = repeat(pos + center, float3(repeatSize, repeatSize, repeatSize));
-
-		pos = twistY(pos, py);
-		pos = twistX(pos, px);
-		pos = twistZ(pos, pz);
-
-		return DistanceFuncKaiware(pos, float3(0, 0, 0), float3(1, 1, 1), float3(0, 1, 0), h);
+		return pseudo_kleinian(pos);
 	}
 
 	gbuffer CustomGBufferOutPut(float3 normal, float depth, raymarchOut rayOut)
