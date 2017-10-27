@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RayMarhing
-  m_Shader: {fileID: 4800000, guid: 11df2b7584988ae4db10e5f07c5be6fa, type: 3}
+  m_Name: RayMarhingKaiware
+  m_Shader: {fileID: 4800000, guid: e83d41e7660f7f74d9cb58d8c92e6259, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -74,7 +74,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
+    - _Diffuse: {r: 0.63488847, g: 1, b: 0.33823532, a: 1}
     - _Emission: {r: 0.4477725, g: 0.47420946, b: 0.74264705, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}
