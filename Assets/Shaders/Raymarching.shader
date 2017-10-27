@@ -27,22 +27,6 @@
 	float CustomDistanceFunction(float3 pos) 
 	{
 		return box(pos, float3(1, 1, 1));
-
-		//const float repeatSize = 5;
-		//const float center = repeatSize * 0.5;
-
-		//float h = _Time.y * 0.5;
-		//float px = sin(_Time.y * 2);
-		//float py = cos(_Time.y * 1.43);
-		//float pz = sin(_Time.y * 1.835);
-
-		//pos = repeat(pos + center, float3(repeatSize, repeatSize, repeatSize));
-
-		//pos = twistY(pos, py);
-		//pos = twistX(pos, px);
-		//pos = twistZ(pos, pz);
-
-		//return DistanceFuncKaiware(pos, float3(0, 0, 0), float3(1, 1, 1), float3(0, 1, 0), h);
 	}
 
 	gbuffer CustomGBufferOutPut(float3 normal, float depth, raymarchOut rayOut)
